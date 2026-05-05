@@ -25,8 +25,7 @@ public class RoverSystemParser {
         this.commandCreator = commandCreator;
     }
 
-    private Rover extractRover() {
-        String roverId = scanner.scamRoverId();
+    private Rover extractRover(String roverId) {
         Coordinate coordinate = scanner.scanCoordinate();
         Direction heading = scanner.scanDirection();
         return  new Rover(roverId, coordinate, heading);
@@ -36,8 +35,8 @@ public class RoverSystemParser {
         Map<String, Rover> rovers = new HashMap<String, Rover>();
 
         while (!scanner.peek().endsWith(":")) {
-            Rover rover = extractRover();
-            rovers.put(scanner.peek(), rover);
+            String roverId = scanner.scanRoverId();
+            rovers.put(roverId, extractRover(roverId));
         }
 
         return  rovers;
@@ -47,19 +46,29 @@ public class RoverSystemParser {
         RoverSystem roverSystem = new RoverSystem();
         Map<String, Rover> rovers = parseRover();
         roverSystem.addRover(rovers);
-        RoverCommands roverCommands = parseRoverCommands();
-        roverSystem.addCommands(roverCommands);
+        Map<String, RoverCommands> roversCommands = parseRoverCommands();
+        roverSystem.addCommands(roversCommands);
         return roverSystem;
     }
 
-    private RoverCommands parseRoverCommands() {
+    private RoverCommands extractCommand() {
         RoverCommands roverCommands = new RoverCommands();
         String instructions = scanner.consume();
+
         for (int i = 0; i < instructions.length(); i++) {
             RoverCommand roverCommand = commandCreator.create(instructions.charAt(i), navigator, boundary);
             roverCommands.add(roverCommand);
         }
-
         return roverCommands;
+    }
+
+    private Map<String, RoverCommands> parseRoverCommands() {
+        Map<String, RoverCommands> roversCommands= new HashMap<>();
+
+        while (scanner.peek() != null && scanner.peek().endsWith(":")) {
+            roversCommands.put(scanner.scanRoverId(), extractCommand());
+        }
+
+        return roversCommands;
     }
 }

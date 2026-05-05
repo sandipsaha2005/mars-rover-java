@@ -7,19 +7,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RoverSystem {
-    private HashMap<String,Rover> rovers;
-    private RoverCommands roverCommands;
+    private Map<String,Rover> rovers = new HashMap<>();;
+    private Map<String, RoverCommands> roversCommands = new HashMap<>();
 
     public void addRover(Map<String, Rover> rover) {
-        this.rovers.putAll(rovers);
+        this.rovers.putAll(rover);
     }
 
-    public void addCommands(RoverCommands roverCommands) {
-        this.roverCommands = roverCommands;
+    public void addCommands(Map<String, RoverCommands> commands) {
+        this.roversCommands.putAll(commands);
     }
 
-    public void execute(String id) {
-        this.roverCommands.execute(this.rovers.get(id));
+    public void execute() {
+        this.rovers.forEach((s, rover) -> {
+            this.roversCommands.get(s).execute(rover);
+        });
     }
 
     @Override

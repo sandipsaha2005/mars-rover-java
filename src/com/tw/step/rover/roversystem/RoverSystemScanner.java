@@ -1,6 +1,5 @@
 package com.tw.step.rover.roversystem;
 
-import com.tw.step.rover.commands.RoverCommands;
 import com.tw.step.rover.position.Coordinate;
 import com.tw.step.rover.position.Direction;
 
@@ -39,8 +38,8 @@ public class RoverSystemScanner {
         return Integer.parseInt(consume());
     }
 
-    public  String scamRoverId () {
-        return consume();
+    public  String scanRoverId() {
+        return consume().split(":")[0];
     }
 
     public Coordinate scanCoordinate() {

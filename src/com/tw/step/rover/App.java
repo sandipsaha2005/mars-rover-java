@@ -27,7 +27,7 @@ public class App {
         RoverSystemParser roverSystemParser = new RoverSystemParser(scanner, navigator, boundary, commandCreator);
         RoverSystem system = roverSystemParser.parse();
 
-//        system.execute();
-//        System.out.println(system);
+        system.execute();
+        System.out.println(system);
     }
 }
