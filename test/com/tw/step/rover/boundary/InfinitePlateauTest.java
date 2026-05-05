@@ -9,7 +9,6 @@ class InfinitePlateauTest {
     @Test
     void shouldAllowAnyCoordinate() {
         InfinitePlateau plateau = new InfinitePlateau();
-
         assertTrue(plateau.isWithin(new Coordinate(-10, 25)));
     }
 }

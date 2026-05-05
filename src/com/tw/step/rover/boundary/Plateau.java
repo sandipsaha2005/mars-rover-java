@@ -15,4 +15,12 @@ public class Plateau implements Boundary {
     public boolean isWithin(Coordinate coord) {
         return coord.isWithin(bottomLeft,topRight);
     }
+
+    @Override
+    public String toString() {
+        return "Plateau{" +
+                "bottomLeft=" + bottomLeft +
+                ", topRight=" + topRight +
+                '}';
+    }
 }

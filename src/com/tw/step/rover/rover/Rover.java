@@ -22,6 +22,8 @@ public class Rover {
         this("", coordinate, heading);
     }
 
+
+
     public void turnLeft(Navigator navigator, Boundary boundary) {
         this.roverState = this.roverState.turnLeft(navigator, boundary);
     }

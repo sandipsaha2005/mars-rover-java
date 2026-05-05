@@ -1,7 +1,10 @@
 package com.tw.step.rover.roversystem;
 
+import com.tw.step.rover.boundary.Boundary;
 import com.tw.step.rover.boundary.InfinitePlateau;
+import com.tw.step.rover.boundary.Plateau;
 import com.tw.step.rover.commands.CommandCreator;
+import com.tw.step.rover.position.Coordinate;
 import com.tw.step.rover.position.Navigator;
 import org.junit.jupiter.api.Test;
 
@@ -17,5 +20,20 @@ class RoverSystemParserTest {
         roverSystem.execute();
 
         assertEquals("3 2 E", roverSystem.toString());
+    }
+
+    void shouldParseInstructionForMultipleRover() {
+        String input = """
+                5 5
+                R1 1 2 N
+                R2 3 3 E
+                R1: FFRFF
+                R2: FFF
+                """;
+        RoverSystemScanner scanner = RoverSystemScanner.from(input);
+        Boundary boundary = new Plateau(new Coordinate(0, 0), scanner.scanCoordinate());
+        RoverSystemParser parser = new RoverSystemParser(scanner, Navigator.create(), new InfinitePlateau(), new CommandCreator());
+        RoverSystem roverSystem = parser.parse();
+
     }
 }

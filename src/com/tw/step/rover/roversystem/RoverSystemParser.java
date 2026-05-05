@@ -9,6 +9,9 @@ import com.tw.step.rover.position.Direction;
 import com.tw.step.rover.position.Navigator;
 import com.tw.step.rover.rover.Rover;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class RoverSystemParser {
     private final RoverSystemScanner scanner;
     private final Navigator navigator;
@@ -22,16 +25,28 @@ public class RoverSystemParser {
         this.commandCreator = commandCreator;
     }
 
-    private Rover parseRover() {
+    private Rover extractRover() {
+        String roverId = scanner.scamRoverId();
         Coordinate coordinate = scanner.scanCoordinate();
         Direction heading = scanner.scanDirection();
-        return new Rover(coordinate, heading);
+        return  new Rover(roverId, coordinate, heading);
+    }
+
+    private Map<String, Rover> parseRover() {
+        Map<String, Rover> rovers = new HashMap<String, Rover>();
+
+        while (!scanner.peek().endsWith(":")) {
+            Rover rover = extractRover();
+            rovers.put(scanner.peek(), rover);
+        }
+
+        return  rovers;
     }
 
     public RoverSystem parse() {
         RoverSystem roverSystem = new RoverSystem();
-        Rover rover = parseRover();
-        roverSystem.addRover(rover);
+        Map<String, Rover> rovers = parseRover();
+        roverSystem.addRover(rovers);
         RoverCommands roverCommands = parseRoverCommands();
         roverSystem.addCommands(roverCommands);
         return roverSystem;
