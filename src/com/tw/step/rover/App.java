@@ -16,8 +16,10 @@ public class App {
                 5 5
                 R1 1 2 N
                 R2 3 3 E
+                R3 0 0 N
                 R1: FFRFF
                 R2: FFF
+                R3: F
                 """;
 
         RoverSystemScanner scanner = RoverSystemScanner.from(text);

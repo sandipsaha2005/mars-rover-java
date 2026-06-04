@@ -65,7 +65,7 @@ public class RoverSystemParser {
     private Map<String, RoverCommands> parseRoverCommands() {
         Map<String, RoverCommands> roversCommands= new HashMap<>();
 
-        while (scanner.peek() != null && scanner.peek().endsWith(":")) {
+        while (!scanner.isDone() && scanner.peek().endsWith(":")) {
             roversCommands.put(scanner.scanRoverId(), extractCommand());
         }
 

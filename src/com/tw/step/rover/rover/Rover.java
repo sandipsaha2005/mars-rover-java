@@ -5,6 +5,8 @@ import com.tw.step.rover.position.Coordinate;
 import com.tw.step.rover.position.Direction;
 import com.tw.step.rover.position.Navigator;
 
+import java.util.Objects;
+
 public class Rover {
     private final String id;
     private RoverState roverState;
@@ -21,8 +23,6 @@ public class Rover {
     public Rover(Coordinate coordinate, Direction heading) {
         this("", coordinate, heading);
     }
-
-
 
     public void turnLeft(Navigator navigator, Boundary boundary) {
         this.roverState = this.roverState.turnLeft(navigator, boundary);
@@ -54,6 +54,18 @@ public class Rover {
 
     boolean isWithin(Boundary boundary) {
         return boundary.isWithin(this.coordinate);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Rover rover = (Rover) o;
+        return Objects.equals(id, rover.id) && roverState.equals(rover.roverState) && Objects.equals(coordinate, rover.coordinate) && heading == rover.heading;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, roverState, coordinate, heading);
     }
 
     @Override

@@ -17,7 +17,7 @@ public class RoverSystemScanner {
         return this.tokens[this.currentIndex];
     }
 
-    private boolean isDone() {
+    protected boolean isDone() {
         return this.currentIndex >= this.tokens.length;
     }
 
